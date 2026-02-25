@@ -1,2 +1,4 @@
 artifacts/
 Snake_RL_venv/
+__pycache__/
+*.py[cod]
