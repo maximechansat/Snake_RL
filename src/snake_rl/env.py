@@ -12,9 +12,28 @@ ENV_ID = "gymnasium_env/SnakeEnv-v1"
 class SnakeEnv(gym.Env):
     metadata = {"render_modes": ["human"], "render_fps": 8}
 
-    def __init__(self, size: int = 10, render_mode: Optional[str] = "human"):
+    def __init__(
+        self,
+        size: int = 10,
+        render_mode: Optional[str] = "human",
+        reward_wall: float = -5.0,
+        reward_self: float = -1.0,
+        reward_eat: float = 20.0,
+        reward_filled_grid: float = 10.0,
+        reward_step: float = -0.01,
+        reward_closer_bonus: float = 0.1,
+    ):
+        if size < 3:
+            raise ValueError(f"size must be >= 3, got {size}")
+
         self.size = size
         self.render_mode = render_mode
+        self.reward_wall = reward_wall
+        self.reward_self = reward_self
+        self.reward_eat = reward_eat
+        self.reward_filled_grid = reward_filled_grid
+        self.reward_step = reward_step
+        self.reward_closer_bonus = reward_closer_bonus
 
         self.action_space = gym.spaces.Discrete(4)
         self.observation_space = gym.spaces.Dict(
@@ -90,7 +109,7 @@ class SnakeEnv(gym.Env):
 
         if nx < 0 or nx >= self.size or ny < 0 or ny >= self.size:
             terminated = True
-            reward = -5.0
+            reward = self.reward_wall
             return self._get_obs(), reward, terminated, truncated, {"length": len(self.snake), "dead": True, "event": "wall"}
 
         old_dist = self.manhattan(self.snake[0], self.apple)
@@ -101,27 +120,27 @@ class SnakeEnv(gym.Env):
 
         if (new_head in body_set) and not (new_head == tail and not will_eat):
             terminated = True
-            reward = -1.0
+            reward = self.reward_self
             return self._get_obs(), reward, terminated, truncated, {"length": len(self.snake), "dead": True, "event": "self"}
 
         self.snake.appendleft(new_head)
         new_dist = self.manhattan(new_head, self.apple)
 
         if will_eat:
-            reward = 20.0
+            reward = self.reward_eat
             self.apple = self._spawn_apple()
             if self.apple is None:
                 terminated = True
-                reward = 10.0
+                reward = self.reward_filled_grid
                 info = {"length": len(self.snake), "dead": False, "event": "filled_grid"}
             else:
                 info = {"length": len(self.snake), "dead": False, "event": "eat"}
         else:
             self.snake.pop()
-            reward = -0.01
+            reward = self.reward_step
             info = {"length": len(self.snake), "dead": False, "event": "move"}
             if new_dist < old_dist:
-                reward += 0.1
+                reward += self.reward_closer_bonus
 
         return self._get_obs(), reward, terminated, truncated, info
 
@@ -133,9 +152,29 @@ def register_env(env_id: str = ENV_ID) -> None:
         gym.register(id=env_id, entry_point=SnakeEnv, max_episode_steps=100000)
 
 
-def make_env(size: int = 10, record_stats: bool = False, buffer_length: int = 1000, env_id: str = ENV_ID) -> gym.Env:
+def make_env(
+    size: int = 10,
+    record_stats: bool = False,
+    buffer_length: int = 1000,
+    env_id: str = ENV_ID,
+    reward_wall: float = -5.0,
+    reward_self: float = -1.0,
+    reward_eat: float = 20.0,
+    reward_filled_grid: float = 10.0,
+    reward_step: float = -0.01,
+    reward_closer_bonus: float = 0.1,
+) -> gym.Env:
     register_env(env_id)
-    env = gym.make(env_id, size=size)
+    env = gym.make(
+        env_id,
+        size=size,
+        reward_wall=reward_wall,
+        reward_self=reward_self,
+        reward_eat=reward_eat,
+        reward_filled_grid=reward_filled_grid,
+        reward_step=reward_step,
+        reward_closer_bonus=reward_closer_bonus,
+    )
     if record_stats:
         env = gym.wrappers.RecordEpisodeStatistics(env, buffer_length=buffer_length)
     return env

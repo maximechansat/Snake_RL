@@ -14,6 +14,7 @@ def main() -> None:
     parser.add_argument("--size", type=int, default=10)
     parser.add_argument("--model-path", type=str, default="artifacts/best_model.pkl")
     parser.add_argument("--episodes", type=int, default=200)
+    parser.add_argument("--seed", type=int, default=None, help="Optional random seed for reproducible evaluation.")
     args = parser.parse_args()
 
     config = build_training_config(n_episodes=1000)
@@ -27,7 +28,7 @@ def main() -> None:
         discount_factor=config["discount_factor"],
     )
     agent.load(args.model_path)
-    metrics = evaluate_agent(agent=agent, env=env, num_episodes=args.episodes)
+    metrics = evaluate_agent(agent=agent, env=env, num_episodes=args.episodes, seed=args.seed)
     print(json.dumps(metrics, indent=2))
 
 

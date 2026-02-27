@@ -9,11 +9,21 @@ from tqdm import tqdm
 from .agent import SnakeAgent
 
 
-def train_agent(agent: SnakeAgent, env: gym.Env, n_episodes: int, progress: bool = True) -> None:
+def train_agent(
+    agent: SnakeAgent,
+    env: gym.Env,
+    n_episodes: int,
+    progress: bool = True,
+    seed: int | None = None,
+) -> None:
     iterator = tqdm(range(n_episodes)) if progress else range(n_episodes)
+    if seed is not None:
+        np.random.seed(seed)
+        env.action_space.seed(seed)
 
-    for _ in iterator:
-        obs, _ = env.reset()
+    for episode_idx in iterator:
+        reset_seed = (seed + episode_idx) if seed is not None else None
+        obs, _ = env.reset(seed=reset_seed)
         terminated = False
         truncated = False
         dead = False
@@ -42,6 +52,9 @@ def build_training_config(
     final_epsilon: float = 0.02,
     discount_factor: float = 0.95,
 ) -> Dict[str, float]:
+    if n_episodes <= 0:
+        raise ValueError(f"n_episodes must be > 0, got {n_episodes}")
+
     epsilon_decay = start_epsilon / (0.8 * n_episodes)
     return {
         "n_episodes": n_episodes,
