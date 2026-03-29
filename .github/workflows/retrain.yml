@@ -1,0 +1,30 @@
+name: Retrain models
+
+on:
+  schedule:
+    # Run every Sunday at 3am UTC
+    - cron: "0 3 * * 0"
+  workflow_dispatch: # allow manual trigger
+
+jobs:
+  retrain:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - run: pip install -e .
+
+      - name: Run grid search
+        run: python -m snake_rl.grid_search --output-dir artifacts/grid_results --episodes 50000
+
+      - name: Commit updated models
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add artifacts/grid_results/
+          git diff --staged --quiet || git commit -m "chore: retrain models with latest code"
+          git push

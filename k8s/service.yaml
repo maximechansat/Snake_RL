@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: snake-rl
+  labels:
+    app: snake-rl
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8501
+      targetPort: 8501
+      protocol: TCP
+  selector:
+    app: snake-rl

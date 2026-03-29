@@ -1,15 +1,16 @@
 from __future__ import annotations
 
-from typing import Any, List
+from typing import Any
 
 import matplotlib.pyplot as plt
-from matplotlib import animation
 import numpy as np
+from matplotlib import animation
 
 from .agent import SnakeAgent
 
 
 def snake_to_frame(env: Any) -> np.ndarray:
+    """Convert the current game state to an RGB frame."""
     e = env.unwrapped
     size = e.size
 
@@ -28,7 +29,8 @@ def snake_to_frame(env: Any) -> np.ndarray:
     return frame[::-1, :, :]
 
 
-def rollout_frames(agent: SnakeAgent, env: Any, max_steps: int = 100000, greedy: bool = True) -> List[np.ndarray]:
+def rollout_frames(agent: SnakeAgent, env: Any, max_steps: int = 100000, greedy: bool = True) -> list[np.ndarray]:
+    """Play a full episode and collect frames for animation."""
     old_eps = agent.epsilon
     if greedy:
         agent.epsilon = 0.0
@@ -51,7 +53,8 @@ def rollout_frames(agent: SnakeAgent, env: Any, max_steps: int = 100000, greedy:
     return frames
 
 
-def build_animation_html(frames: List[np.ndarray], interval_ms: int = 120) -> str:
+def build_animation_html(frames: list[np.ndarray], interval_ms: int = 120) -> str:
+    """Build an HTML animation from a list of frames."""
     fig = plt.figure()
     image = plt.imshow(frames[0], interpolation="nearest")
     plt.axis("off")
@@ -66,6 +69,8 @@ def build_animation_html(frames: List[np.ndarray], interval_ms: int = 120) -> st
     return html
 
 
-def visualize_episode(agent: SnakeAgent, env: Any, max_steps: int = 100000, greedy: bool = True, interval_ms: int = 120) -> str:
+def visualize_episode(
+    agent: SnakeAgent, env: Any, max_steps: int = 100000, greedy: bool = True, interval_ms: int = 120
+) -> str:
     frames = rollout_frames(agent=agent, env=env, max_steps=max_steps, greedy=greedy)
     return build_animation_html(frames=frames, interval_ms=interval_ms)
