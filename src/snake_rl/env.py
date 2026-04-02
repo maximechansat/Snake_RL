@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from collections import deque
-from typing import Any, Dict, Optional
+from typing import Any
 
 import gymnasium as gym
 import numpy as np
@@ -10,9 +10,11 @@ ENV_ID = "gymnasium_env/SnakeEnv-v1"
 
 
 class SnakeEnv(gym.Env):
+    """Gymnasium environment for the Snake game."""
+
     metadata = {"render_modes": ["human"], "render_fps": 8}
 
-    def __init__(self, size: int = 10, render_mode: Optional[str] = "human"):
+    def __init__(self, size: int = 10, render_mode: str | None = "human"):
         self.size = size
         self.render_mode = render_mode
 
@@ -35,7 +37,8 @@ class SnakeEnv(gym.Env):
         self.direction = np.array([1, 0], dtype=np.int32)
         self.apple = np.array([0, 0], dtype=np.int32)
 
-    def _spawn_apple(self) -> Optional[np.ndarray]:
+    def _spawn_apple(self) -> np.ndarray | None:
+        """Spawn an apple on a free cell, or return None if the grid is full."""
         occupied = set(self.snake)
         free = [(x, y) for x in range(self.size) for y in range(self.size) if (x, y) not in occupied]
         if not free:
@@ -43,9 +46,10 @@ class SnakeEnv(gym.Env):
         x, y = free[self.np_random.integers(0, len(free))]
         return np.array([x, y], dtype=np.int32)
 
-    def _get_obs(self) -> Dict[str, np.ndarray]:
+    def _get_obs(self) -> dict[str, np.ndarray]:
+        """Build the observation dict (grid + direction)."""
         grid = np.zeros((self.size, self.size), dtype=np.int8)
-        for (x, y) in list(self.snake)[1:]:
+        for x, y in list(self.snake)[1:]:
             grid[y, x] = 1
 
         hx, hy = self.snake[0]
@@ -57,7 +61,8 @@ class SnakeEnv(gym.Env):
 
         return {"grid": grid, "dir": self.direction.astype(np.int8)}
 
-    def reset(self, seed: Optional[int] = None, options: Optional[dict] = None):
+    def reset(self, seed: int | None = None, options: dict | None = None):
+        """Reset the env with a size-3 snake in the center."""
         super().reset(seed=seed)
 
         cx, cy = self.size // 2, self.size // 2
@@ -74,6 +79,7 @@ class SnakeEnv(gym.Env):
         return abs(a[0] - b[0]) + abs(a[1] - b[1])
 
     def step(self, action: int):
+        """Apply action, return (obs, reward, terminated, truncated, info)."""
         new_dir = self._action_to_dir[int(action)]
 
         if np.array_equal(new_dir, -self.direction):
@@ -91,7 +97,8 @@ class SnakeEnv(gym.Env):
         if nx < 0 or nx >= self.size or ny < 0 or ny >= self.size:
             terminated = True
             reward = -5.0
-            return self._get_obs(), reward, terminated, truncated, {"length": len(self.snake), "dead": True, "event": "wall"}
+            info = {"length": len(self.snake), "dead": True, "event": "wall"}
+            return self._get_obs(), reward, terminated, truncated, info
 
         old_dist = self.manhattan(self.snake[0], self.apple)
         new_head = (nx, ny)
@@ -102,7 +109,8 @@ class SnakeEnv(gym.Env):
         if (new_head in body_set) and not (new_head == tail and not will_eat):
             terminated = True
             reward = -1.0
-            return self._get_obs(), reward, terminated, truncated, {"length": len(self.snake), "dead": True, "event": "self"}
+            info = {"length": len(self.snake), "dead": True, "event": "self"}
+            return self._get_obs(), reward, terminated, truncated, info
 
         self.snake.appendleft(new_head)
         new_dist = self.manhattan(new_head, self.apple)
@@ -127,6 +135,7 @@ class SnakeEnv(gym.Env):
 
 
 def register_env(env_id: str = ENV_ID) -> None:
+    """Register the Snake env in the Gymnasium registry."""
     try:
         gym.spec(env_id)
     except gym.error.Error:
@@ -134,6 +143,7 @@ def register_env(env_id: str = ENV_ID) -> None:
 
 
 def make_env(size: int = 10, record_stats: bool = False, buffer_length: int = 1000, env_id: str = ENV_ID) -> gym.Env:
+    """Create a Snake env, optionally wrapped with RecordEpisodeStatistics."""
     register_env(env_id)
     env = gym.make(env_id, size=size)
     if record_stats:

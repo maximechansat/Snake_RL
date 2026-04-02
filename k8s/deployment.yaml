@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: snake-rl
+  labels:
+    app: snake-rl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: snake-rl
+  template:
+    metadata:
+      labels:
+        app: snake-rl
+    spec:
+      containers:
+        - name: snake-rl
+          image: ghcr.io/maeltremouille/snake_rl:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8501
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"

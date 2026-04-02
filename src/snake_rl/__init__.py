@@ -1,4 +1,4 @@
-"""Core package for the Snake RL project."""
+"""Snake RL package."""
 
 from .agent import SnakeAgent
 from .env import SnakeEnv, make_env, register_env

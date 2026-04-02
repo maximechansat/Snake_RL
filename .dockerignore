@@ -1,0 +1,13 @@
+.git/
+.github/
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+build/
+artifacts/best_model.pkl
+snake.ipynb
+.claude/
+.DS_Store
+tests/

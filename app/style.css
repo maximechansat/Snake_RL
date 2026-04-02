@@ -1,0 +1,43 @@
+/* Theme Snake RL */
+
+h1, h2, h3 {
+    color: #4CAF50;
+}
+
+/* Boutons */
+.stButton > button {
+    background-color: #4CAF50;
+    color: #1a1a2e;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    padding: 0.5rem 1.5rem;
+    transition: background-color 0.2s;
+}
+
+.stButton > button:hover {
+    background-color: #66BB6A;
+}
+
+/* Metriques */
+[data-testid="stMetric"] {
+    background-color: #16213e;
+    border: 1px solid #4CAF5033;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+/* Selecteurs */
+.stSelectbox, .stMultiSelect {
+    border-radius: 8px;
+}
+
+/* Sidebar */
+[data-testid="stSidebar"] {
+    background-color: #0f3460;
+}
+
+/* Tableau */
+.stDataFrame {
+    border-radius: 8px;
+}

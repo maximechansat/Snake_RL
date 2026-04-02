@@ -1,0 +1,24 @@
+{
+  "num_episodes": 200,
+  "max_steps": 5000,
+  "avg_apples": 17.895,
+  "std_apples": 5.924016796059917,
+  "avg_length": 20.895,
+  "std_length": 5.924016796059917,
+  "avg_steps": 158.485,
+  "std_steps": 63.38122572970643,
+  "death_rate": 1.0,
+  "end_events": {
+    "self": 200
+  },
+  "apples_quantiles_10_50_90": [
+    11.0,
+    18.0,
+    25.0
+  ],
+  "steps_quantiles_10_50_90": [
+    84.0,
+    155.0,
+    230.29999999999998
+  ]
+}

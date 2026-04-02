@@ -1,0 +1,157 @@
+{
+  "runs": [
+    {
+      "run_id": "lr0.005_df0.9_ep50000",
+      "config": {
+        "n_episodes": 50000,
+        "learning_rate": 0.005,
+        "start_epsilon": 1.0,
+        "epsilon_decay": 2.5e-05,
+        "final_epsilon": 0.02,
+        "discount_factor": 0.9,
+        "grid_size": 10
+      },
+      "metrics_summary": {
+        "avg_apples": 15.765,
+        "avg_steps": 122.38,
+        "death_rate": 1.0
+      }
+    },
+    {
+      "run_id": "lr0.005_df0.95_ep50000",
+      "config": {
+        "n_episodes": 50000,
+        "learning_rate": 0.005,
+        "start_epsilon": 1.0,
+        "epsilon_decay": 2.5e-05,
+        "final_epsilon": 0.02,
+        "discount_factor": 0.95,
+        "grid_size": 10
+      },
+      "metrics_summary": {
+        "avg_apples": 15.945,
+        "avg_steps": 122.025,
+        "death_rate": 1.0
+      }
+    },
+    {
+      "run_id": "lr0.005_df0.99_ep50000",
+      "config": {
+        "n_episodes": 50000,
+        "learning_rate": 0.005,
+        "start_epsilon": 1.0,
+        "epsilon_decay": 2.5e-05,
+        "final_epsilon": 0.02,
+        "discount_factor": 0.99,
+        "grid_size": 10
+      },
+      "metrics_summary": {
+        "avg_apples": 14.65,
+        "avg_steps": 114.045,
+        "death_rate": 1.0
+      }
+    },
+    {
+      "run_id": "lr0.01_df0.9_ep50000",
+      "config": {
+        "n_episodes": 50000,
+        "learning_rate": 0.01,
+        "start_epsilon": 1.0,
+        "epsilon_decay": 2.5e-05,
+        "final_epsilon": 0.02,
+        "discount_factor": 0.9,
+        "grid_size": 10
+      },
+      "metrics_summary": {
+        "avg_apples": 16.29,
+        "avg_steps": 126.8,
+        "death_rate": 1.0
+      }
+    },
+    {
+      "run_id": "lr0.01_df0.95_ep50000",
+      "config": {
+        "n_episodes": 50000,
+        "learning_rate": 0.01,
+        "start_epsilon": 1.0,
+        "epsilon_decay": 2.5e-05,
+        "final_epsilon": 0.02,
+        "discount_factor": 0.95,
+        "grid_size": 10
+      },
+      "metrics_summary": {
+        "avg_apples": 15.68,
+        "avg_steps": 123.725,
+        "death_rate": 1.0
+      }
+    },
+    {
+      "run_id": "lr0.01_df0.99_ep50000",
+      "config": {
+        "n_episodes": 50000,
+        "learning_rate": 0.01,
+        "start_epsilon": 1.0,
+        "epsilon_decay": 2.5e-05,
+        "final_epsilon": 0.02,
+        "discount_factor": 0.99,
+        "grid_size": 10
+      },
+      "metrics_summary": {
+        "avg_apples": 15.53,
+        "avg_steps": 123.99,
+        "death_rate": 1.0
+      }
+    },
+    {
+      "run_id": "lr0.05_df0.9_ep50000",
+      "config": {
+        "n_episodes": 50000,
+        "learning_rate": 0.05,
+        "start_epsilon": 1.0,
+        "epsilon_decay": 2.5e-05,
+        "final_epsilon": 0.02,
+        "discount_factor": 0.9,
+        "grid_size": 10
+      },
+      "metrics_summary": {
+        "avg_apples": 17.175,
+        "avg_steps": 136.31,
+        "death_rate": 1.0
+      }
+    },
+    {
+      "run_id": "lr0.05_df0.95_ep50000",
+      "config": {
+        "n_episodes": 50000,
+        "learning_rate": 0.05,
+        "start_epsilon": 1.0,
+        "epsilon_decay": 2.5e-05,
+        "final_epsilon": 0.02,
+        "discount_factor": 0.95,
+        "grid_size": 10
+      },
+      "metrics_summary": {
+        "avg_apples": 17.09,
+        "avg_steps": 136.02,
+        "death_rate": 1.0
+      }
+    },
+    {
+      "run_id": "lr0.05_df0.99_ep50000",
+      "config": {
+        "n_episodes": 50000,
+        "learning_rate": 0.05,
+        "start_epsilon": 1.0,
+        "epsilon_decay": 2.5e-05,
+        "final_epsilon": 0.02,
+        "discount_factor": 0.99,
+        "grid_size": 10
+      },
+      "metrics_summary": {
+        "avg_apples": 17.895,
+        "avg_steps": 158.485,
+        "death_rate": 1.0
+      }
+    }
+  ]
+}
