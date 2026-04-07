@@ -1,8 +1,8 @@
 # Snake_RL
 
-Projet d'apprentissage par renforcement (Q-learning) applique au jeu Snake.
+Projet d'apprentissage par renforcement (Q-learning) appliqué au jeu Snake.
 
-## Prerequis
+## Prérequis
 
 - Python 3.10+
 - `pip`
@@ -17,16 +17,16 @@ pip install -r requirements.txt
 
 ## Structure
 
-- `snake.ipynb` : notebook de demo
+- `snake.ipynb` : notebook de démo
 - `src/snake_rl/env.py` : environnement Gymnasium
 - `src/snake_rl/agent.py` : agent Q-learning + save/load des poids
-- `src/snake_rl/training.py` : boucle d'entrainement
-- `src/snake_rl/evaluation.py` : metriques d'evaluation
+- `src/snake_rl/training.py` : boucle d'entraînement
+- `src/snake_rl/evaluation.py` : metriques d'évaluation
 - `src/snake_rl/visualization.py` : visualisation d'une partie auto
-- `src/snake_rl/cli_train.py` : CLI d'entrainement
-- `src/snake_rl/cli_eval.py` : CLI d'evaluation
+- `src/snake_rl/cli_train.py` : CLI d'entraînement
+- `src/snake_rl/cli_eval.py` : CLI d'évaluation
 - `src/snake_rl/cli_visualize.py` : CLI d'export de demo HTML
-- `requirements.txt` : dependances
+- `requirements.txt` : dépendances
 
 ## Utilisation rapide
 
@@ -36,7 +36,7 @@ pip install -r requirements.txt
 $env:PYTHONPATH="src"
 ```
 
-2. Entraine le modele:
+2. Entraîner le modele:
 
 ```powershell
 python -m snake_rl.cli_train --episodes 10000 --model-path artifacts/best_model.pkl
@@ -48,7 +48,7 @@ python -m snake_rl.cli_train --episodes 10000 --model-path artifacts/best_model.
 python -m snake_rl.cli_eval --model-path artifacts/best_model.pkl --episodes 200
 ```
 
-4. Genere une visualisation auto en HTML:
+4. Génère une visualisation automatique en HTML:
 
 ```powershell
 python -m snake_rl.cli_visualize --model-path artifacts/best_model.pkl --output artifacts/episode_preview.html --greedy
@@ -86,4 +86,4 @@ HTML(html)
 ## Notes
 
 - Le notebook reste utile pour l'exploration, mais la logique principale est maintenant dans `src/`.
-- Les poids du meilleur modele sont sauvegardes via `SnakeAgent.save(...)`.
+- Les poids du meilleur modele sont sauvegardés via `SnakeAgent.save(...)`.
