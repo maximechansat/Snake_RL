@@ -76,8 +76,7 @@ Les resultats sont ecrits localement dans `artifacts/grid_results/`, puis peuven
 
 ### Mettre a jour les artefacts S3
 
-Les modeles entraines ne sont plus versionnes dans Git et ne sont plus embarques dans l'image Docker.
-Ils sont stockes sur le S3/MinIO du SSPCloud :
+Les modeles entraines sont stockes sur le S3/MinIO du SSPCloud :
 
 ```text
 s3://mchansat/snake-rl/artifacts/grid_results
@@ -87,12 +86,6 @@ Apres un entrainement, envoyez les artefacts vers S3 :
 
 ```bash
 make upload-artifacts
-```
-
-Si `make` n'est pas disponible, utilisez la commande Python equivalente :
-
-```bash
-python -c "import os, s3fs; fs=s3fs.S3FileSystem(client_kwargs={'endpoint_url': os.environ.get('S3_ENDPOINT_URL', 'https://minio.lab.sspcloud.fr')}); fs.put('artifacts/grid_results', 's3://mchansat/snake-rl/artifacts/grid_results', recursive=True)"
 ```
 
 Pour entrainer puis envoyer les artefacts :
@@ -135,8 +128,7 @@ make docker-build
 make docker-run
 ```
 
-Le dashboard est accessible sur http://localhost:8501. L'image Docker ne contient pas les artefacts d'entrainement :
-ils sont lus au runtime depuis S3 via les variables d'environnement ci-dessus.
+Le dashboard est accessible sur http://localhost:8501.
 
 ## Qualite du code
 
