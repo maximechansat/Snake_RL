@@ -145,6 +145,7 @@ Le projet utilise GitHub Actions (`.github/workflows/ci.yml`) :
 - **Lint** : verification du code avec ruff
 - **Test** : execution des tests avec pytest
 - **Docker** : build et push de l'image sur `ghcr.io/maximechansat/snake_rl`
+- **Deploy** : mise a jour automatique de `k8s/deployment.yaml` avec le SHA du commit
 
 Le pipeline se declenche automatiquement a chaque push sur `main`.
 
@@ -153,8 +154,9 @@ Le pipeline se declenche automatiquement a chaque push sur `main`.
 L'application est deployee sur le SSP Cloud via ArgoCD (GitOps) :
 
 1. Le CI push l'image Docker sur ghcr.io
-2. ArgoCD surveille le dossier `k8s/` du repo
-3. Kubernetes deploie l'application automatiquement
+2. Le CI remplace ensuite le tag d'image dans `k8s/deployment.yaml` par le SHA du commit
+3. ArgoCD surveille le dossier `k8s/` du repo
+4. Kubernetes deploie automatiquement cette image versionnee
 
 Les manifestes Kubernetes se trouvent dans `k8s/` :
 - `deployment.yaml` : configuration du container
