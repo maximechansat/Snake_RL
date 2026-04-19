@@ -1,13 +1,14 @@
 from __future__ import annotations
 
-from typing import Any, Dict
+from typing import Any
 
 import numpy as np
 
 from .agent import SnakeAgent
 
 
-def evaluate_agent(agent: SnakeAgent, env: Any, num_episodes: int = 200, max_steps: int = 5000) -> Dict[str, Any]:
+def evaluate_agent(agent: SnakeAgent, env: Any, num_episodes: int = 200, max_steps: int = 5000) -> dict[str, Any]:
+    """Evaluate the agent in greedy mode and return performance metrics."""
     old_epsilon = agent.epsilon
     agent.epsilon = 0.0
 
@@ -57,7 +58,7 @@ def evaluate_agent(agent: SnakeAgent, env: Any, num_episodes: int = 200, max_ste
     steps_arr = np.array(steps_list, dtype=float)
     died_arr = np.array(died_list, dtype=bool)
 
-    counts: Dict[str, int] = {}
+    counts: dict[str, int] = {}
     for event in death_event_list:
         key = str(event)
         counts[key] = counts.get(key, 0) + 1

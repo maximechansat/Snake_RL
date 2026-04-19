@@ -1,4 +1,30 @@
-artifacts/
-Snake_RL_venv/
 __pycache__/
 *.py[cod]
+
+# Packaging
+*.egg-info/
+dist/
+build/
+
+# artifacts
+artifacts/grid_results/
+artifacts/best_model.pkl
+*.pkl
+
+# Virtual environments
+.venv/
+Snake_RL_venv/
+
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# Docker
+docker-compose.override.yml
+
+# Claude
+.claude/
