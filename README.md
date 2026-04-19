@@ -2,6 +2,7 @@
 
 Projet d'apprentissage par renforcement (Q-learning) applique au jeu Snake.
 Dashboard interactif Streamlit pour comparer differentes configurations d'entrainement.
+La page web est https://snake-rl-maximechansat.lab.sspcloud.fr.
 
 ## Prerequis
 
@@ -145,7 +146,7 @@ Le projet utilise GitHub Actions (`.github/workflows/ci.yml`) :
 - **Test** : execution des tests avec pytest
 - **Docker** : build et push de l'image sur `ghcr.io/maximechansat/snake_rl`
 
-Le pipeline se declenche automatiquement a chaque push sur `main` ou `test-triturage`.
+Le pipeline se declenche automatiquement a chaque push sur `main`.
 
 ## Deploiement (SSP Cloud)
 

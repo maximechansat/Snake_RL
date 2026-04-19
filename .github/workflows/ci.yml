@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main, test-triturage]
+    branches: [main]
   pull_request:
-    branches: [main, test-triturage]
+    branches: [main]
 
 env:
   REGISTRY: ghcr.io
