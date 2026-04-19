@@ -57,3 +57,26 @@ def test_record_stats_wrapper():
     env = make_env(size=6, record_stats=True, buffer_length=10)
     assert hasattr(env, "return_queue")
     env.close()
+
+def test_wall_collision_terminates(env):
+    env.reset(seed=42)
+    for _ in range(10):
+        obs, reward, terminated, truncated, info = env.step(0)
+        if terminated:
+            assert reward < 0
+            return
+    assert False, "Le snake aurait dû mourir en heurtant le mur"
+
+
+def test_eating_food_increases_length(env):
+    env.reset(seed=42)
+    initial_length = env.unwrapped.snake.__len__()
+    for _ in range(50):
+        obs, reward, terminated, truncated, info = env.step(0)
+        if reward > 0:
+            assert info["length"] == initial_length + 1
+            return
+        if terminated:
+            break
+
+
