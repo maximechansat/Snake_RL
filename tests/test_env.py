@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import gymnasium as gym
+import numpy as np
 
 from snake_rl.env import make_env
 
@@ -58,25 +59,28 @@ def test_record_stats_wrapper():
     assert hasattr(env, "return_queue")
     env.close()
 
+
 def test_wall_collision_terminates(env):
     env.reset(seed=42)
     for _ in range(10):
         obs, reward, terminated, truncated, info = env.step(0)
         if terminated:
             assert reward < 0
+            assert info["event"] == "wall"
             return
-    assert False, "Le snake aurait dû mourir en heurtant le mur"
+    raise AssertionError("Le snake aurait dû mourir en heurtant le mur")
 
 
 def test_eating_food_increases_length(env):
     env.reset(seed=42)
-    initial_length = env.unwrapped.snake.__len__()
-    for _ in range(50):
-        obs, reward, terminated, truncated, info = env.step(0)
-        if reward > 0:
-            assert info["length"] == initial_length + 1
-            return
-        if terminated:
-            break
+    initial_length = len(env.unwrapped.snake)
+    head_x, head_y = env.unwrapped.snake[0]
+    env.unwrapped.apple = np.array([head_x + 1, head_y], dtype=np.int32)
 
+    obs, reward, terminated, truncated, info = env.step(0)
 
+    assert not terminated
+    assert not truncated
+    assert reward > 0
+    assert info["event"] == "eat"
+    assert info["length"] == initial_length + 1
